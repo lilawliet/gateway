@@ -3,8 +3,10 @@ import {
   Catch,
   ExceptionFilter,
   HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { BusinessException } from './business.exception';
 
 /**
  *  http 异常过滤器
@@ -17,6 +19,19 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<FastifyRequest>();
     const status = exception.getStatus();
 
+    // 业务异常处理
+    if (exception instanceof BusinessException) {
+      const error = exception.getResponse();
+      response.status(HttpStatus.OK).send({
+        data: null,
+        status: error['code'],
+        extra: {},
+        message: error['message'],
+        success: false,
+      });
+      return;
+    }
+    // 由于异常拦截的返回函数使用的是 Fastify 提供的，所以我们使用的返回方法是 .send（）
     response.status(status).send({
       statusCode: status,
       timestamp: new Date().toISOString(),

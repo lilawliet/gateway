@@ -1,0 +1,16 @@
+export const BUSINESS_ERROR_CODE = {
+  // 公共错误码
+  COMMON: 10001,
+  // 特殊错误码
+  TOKEN_INVALID: 10002,
+  // 禁止访问
+  ACCESS_FORBIDDEN: 10003,
+  // 权限已禁用
+  UPERMISSION_DISABLED: 10004,
+  // 用户冻结
+  USER_DISABLED: 10005,
+  // 用户不存在
+  USER_NOT_FOUND: 10006,
+  // 用户已存在
+  USER_ALREADY_EXIST: 10007,
+};
