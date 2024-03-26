@@ -8,15 +8,11 @@ import { VERSION_NEUTRAL, VersioningType } from '@nestjs/common';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { AllExceptionsFilter } from './common/interceptors/exceptions/base.exception.filter';
 import { HttpExceptionFilter } from './common/interceptors/exceptions/http.exception.filter';
+import { generateDocument } from './utils/doc';
 
 declare const module: any;
 
 async function bootstrap() {
-  if (module.hot) {
-    module.hot.accept();
-    module.hot.dispose(() => app.close());
-  }
-
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
@@ -33,6 +29,15 @@ async function bootstrap() {
 
   // 异常过滤器
   app.useGlobalFilters(new AllExceptionsFilter(), new HttpExceptionFilter());
+
+  // 创建文档
+  generateDocument(app);
+
+  // 热更新
+  if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(() => app.close());
+  }
 
   await app.listen(3000);
 }
