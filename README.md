@@ -58,6 +58,16 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
+## Operations
+
+```bash
+# 自动生成一个用户的 UserController
+nest g co user
+
+# 快速生成 crud
+nest g resource user
+```
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
@@ -71,3 +81,8 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## Some Stange Problems
+
+Q1. Error [ERR_REQUIRE_ESM]: require() of ES Module ...\node_modules\string-width\index.js
+A1. Change nodejs v18.15.0 to v18.20.1

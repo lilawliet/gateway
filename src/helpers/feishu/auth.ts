@@ -69,6 +69,52 @@ export const getUserAccessToken = async ({
   });
 };
 
+export enum RECEIVE_TYPE {
+  'open_id',
+  'user_id',
+  'union_id',
+  'emial',
+  'chat_id',
+}
+
+export enum MESSAGE_TYPE {
+  text,
+  post,
+  image,
+  file,
+  audio,
+  media,
+  sticker,
+  interactive,
+  share_chat,
+  share_user,
+}
+
+export type MESSAGE_BODY = {
+  receive_id: string;
+  content: string;
+  msg_type: MESSAGE_TYPE;
+};
+
+export const sendMessage = async ({
+  receive_id_type,
+  params,
+  app_token,
+}: {
+  receive_id_type: RECEIVE_TYPE;
+  params: MESSAGE_BODY;
+  app_token: string;
+}) => {
+  console.log('sendMessage', params, app_token, receive_id_type);
+  return request({
+    ...baseOptions({
+      authorization: `Bearer ${app_token}`,
+    }),
+    url: `/authen/v1/oidc/access_token?receive_id_type=${receive_id_type}`,
+    method: 'POST',
+    data: params,
+  });
+};
 // /**
 //  * @description: 获取用户 token
 //  */
